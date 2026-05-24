@@ -26,6 +26,8 @@ import { contextualChargingRecommendations } from "@/ai/flows/contextual-chargin
 import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { PlaceHolderImages } from "@/lib/placeholder-images";
 
 export default function NavigationPage() {
   const [destination, setDestination] = useState("");
@@ -34,6 +36,8 @@ export default function NavigationPage() {
   const [isNavigating, setIsNavigating] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
+
+  const mapPlaceholder = PlaceHolderImages.find(img => img.id === 'map-bg');
 
   const handlePlanRoute = async () => {
     if (!destination) {
@@ -85,19 +89,28 @@ export default function NavigationPage() {
     <main className="relative h-screen w-screen overflow-hidden bg-[#0F0F14]">
       {/* Background Map Placeholder */}
       <div className="absolute inset-0 z-0">
-        <div className="w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-900/10 via-background to-background">
-          <div className="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px]"></div>
-          
-          {recommendations && (
-            <div className="absolute top-1/2 left-1/4 right-1/4 h-1 bg-primary/40 rounded-full blur-[1px] animate-pulse">
-               <div className="absolute -top-1 left-0 w-3 h-3 bg-primary rounded-full shadow-[0_0_15px_rgba(94,94,237,1)]"></div>
-               <div className="absolute -top-2 left-1/2 w-5 h-5 bg-accent rounded-full border-4 border-background flex items-center justify-center">
-                 <Zap className="w-3 h-3 text-white" />
-               </div>
-               <div className="absolute -top-1 right-0 w-3 h-3 bg-emerald-500 rounded-full"></div>
-            </div>
-          )}
-        </div>
+        {mapPlaceholder && (
+          <Image 
+            src={mapPlaceholder.imageUrl}
+            alt={mapPlaceholder.description}
+            fill
+            className="object-cover opacity-30 grayscale brightness-[0.4]"
+            data-ai-hint={mapPlaceholder.imageHint}
+            priority
+          />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0F0F14]/80 via-transparent to-[#0F0F14]"></div>
+        <div className="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:60px_60px]"></div>
+        
+        {recommendations && (
+          <div className="absolute top-1/2 left-1/4 right-1/4 h-1 bg-primary/40 rounded-full blur-[1px] animate-pulse">
+             <div className="absolute -top-1 left-0 w-3 h-3 bg-primary rounded-full shadow-[0_0_15px_rgba(94,94,237,1)]"></div>
+             <div className="absolute -top-2 left-1/2 w-5 h-5 bg-accent rounded-full border-4 border-background flex items-center justify-center">
+               <Zap className="w-3 h-3 text-white" />
+             </div>
+             <div className="absolute -top-1 right-0 w-3 h-3 bg-emerald-500 rounded-full"></div>
+          </div>
+        )}
       </div>
 
       {/* Top Search Bar Overlay */}
