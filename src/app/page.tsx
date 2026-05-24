@@ -65,12 +65,19 @@ export default function DashboardPage() {
         <Link href="/navigation">
           <Card className="bg-gradient-to-br from-primary/20 to-accent/10 border-primary/20 hover:from-primary/30 transition-all cursor-pointer">
             <CardContent className="p-4 flex items-center gap-4">
-              <div className="p-3 bg-primary rounded-2xl shadow-lg shadow-primary/20">
+              <div className="p-3 bg-primary rounded-2xl shadow-lg shadow-primary/20 relative">
                 <Sparkles className="w-6 h-6 text-white" />
+                <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-accent"></span>
+                </span>
               </div>
               <div className="flex-1">
-                <h3 className="text-sm font-bold font-headline">Умное планирование</h3>
-                <p className="text-[11px] text-muted-foreground">ИИ подберет зарядки Malanka с учетом ваших предпочтений</p>
+                <div className="flex items-center gap-2">
+                  <h3 className="text-sm font-bold font-headline">ИИ-Планирование</h3>
+                  <span className="text-[9px] bg-primary/20 text-primary px-1.5 py-0.5 rounded-md font-bold uppercase">Beta</span>
+                </div>
+                <p className="text-[11px] text-muted-foreground">Маршруты с учетом зарядок Malanka и ваших пожеланий</p>
               </div>
               <ChevronRight className="w-5 h-5 text-muted-foreground" />
             </CardContent>
@@ -84,7 +91,7 @@ export default function DashboardPage() {
           <Button className="w-full h-20 text-lg font-headline flex justify-between px-6 rounded-2xl bg-primary hover:bg-primary/90 oversized-tap shadow-lg shadow-primary/20">
             <div className="flex items-center gap-3">
               <Navigation className="w-6 h-6" />
-              <span>Навигация</span>
+              <span>Начать поездку</span>
             </div>
             <Search className="w-6 h-6 opacity-50" />
           </Button>
@@ -93,10 +100,16 @@ export default function DashboardPage() {
         <Link href="/onboarding">
           <Card className="glass-card border-none h-32 hover:bg-white/5 transition-colors cursor-pointer oversized-tap">
             <CardContent className="p-4 flex flex-col justify-between h-full">
-              <div className="p-2 bg-accent/20 rounded-lg w-fit">
-                <Zap className="w-6 h-6 text-accent" />
+              <div className="flex justify-between items-start">
+                <div className="p-2 bg-accent/20 rounded-lg w-fit">
+                  <Car className="w-6 h-6 text-accent" />
+                </div>
+                <Sparkles className="w-4 h-4 text-primary opacity-50" />
               </div>
-              <p className="font-semibold text-sm">Профиль авто</p>
+              <div>
+                <p className="font-semibold text-sm">ИИ-Профиль</p>
+                <p className="text-[10px] text-muted-foreground">Умная настройка авто</p>
+              </div>
             </CardContent>
           </Card>
         </Link>
@@ -107,7 +120,10 @@ export default function DashboardPage() {
               <div className="p-2 bg-emerald-500/20 rounded-lg w-fit">
                 <History className="w-6 h-6 text-emerald-500" />
               </div>
-              <p className="font-semibold text-sm">История поездок</p>
+              <div>
+                <p className="font-semibold text-sm">История</p>
+                <p className="text-[10px] text-muted-foreground">Статистика поездок</p>
+              </div>
             </CardContent>
           </Card>
         </Link>
@@ -138,8 +154,8 @@ export default function DashboardPage() {
                 <Clock className="w-4 h-4 text-accent" />
               </div>
               <div>
-                <p className="text-xs text-muted-foreground">Время в пути сегодня</p>
-                <p className="text-sm font-bold">4ч 22м</p>
+                <p className="text-xs text-muted-foreground">Время в пути за неделю</p>
+                <p className="text-sm font-bold">12ч 45м</p>
               </div>
             </div>
           </CardContent>

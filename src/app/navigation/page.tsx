@@ -15,7 +15,8 @@ import {
   Clock,
   ArrowLeft,
   Loader2,
-  CheckCircle2
+  CheckCircle2,
+  Sparkles
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -54,6 +55,10 @@ export default function NavigationPage() {
         chargingPreferences: "Я предпочитаю быстрые зарядки Malanka рядом с кафе и хочу приехать с остатком не менее 20%."
       });
       setRecommendations(result);
+      toast({
+        title: "ИИ проанализировал маршрут",
+        description: "Найдена оптимальная точка зарядки с учетом ваших предпочтений.",
+      });
     } catch (error) {
       toast({
         variant: "destructive",
@@ -106,7 +111,7 @@ export default function NavigationPage() {
           <div className="relative flex-1">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
             <Input 
-              placeholder="Куда едем?" 
+              placeholder="Куда едем сегодня?" 
               value={destination}
               onChange={(e) => setDestination(e.target.value)}
               className="pl-12 h-14 bg-card/80 backdrop-blur-xl border-white/5 rounded-2xl text-lg font-headline shadow-2xl focus-visible:ring-primary oversized-tap" 
@@ -116,7 +121,7 @@ export default function NavigationPage() {
               className="absolute right-2 top-2 h-10 px-6 rounded-xl bg-primary oversized-tap"
               disabled={isPlanning || isNavigating}
             >
-              {isPlanning ? <Loader2 className="w-5 h-5 animate-spin" /> : "ОК"}
+              {isPlanning ? <Loader2 className="w-5 h-5 animate-spin" /> : <Sparkles className="w-5 h-5" />}
             </Button>
           </div>
           <Button variant="ghost" size="icon" className="glass-card rounded-2xl oversized-tap">
@@ -145,14 +150,18 @@ export default function NavigationPage() {
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="text-sm font-bold">ГОТОВ</p>
-                  <p className="text-xs text-muted-foreground">Система в норме</p>
+                  <p className="text-sm font-bold">EVPulse AI</p>
+                  <p className="text-xs text-muted-foreground">Готов к планированию</p>
                 </div>
               </div>
             ) : (
               <div className="space-y-6">
                 <div className="flex justify-between items-start">
                   <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <Sparkles className="w-4 h-4 text-primary" />
+                      <span className="text-[10px] font-bold text-primary uppercase tracking-widest">ИИ-Рекомендация</span>
+                    </div>
                     <h2 className="text-2xl font-bold font-headline">Malanka Supercharge</h2>
                     <p className="text-sm text-muted-foreground">Оптимальная точка • +{recommendations.maxDetourTimeMinutes || 8} мин в пути</p>
                   </div>
@@ -169,7 +178,7 @@ export default function NavigationPage() {
                   </div>
                   <div className="flex flex-col items-center gap-2 p-3 rounded-2xl bg-white/5 border border-white/5">
                     <Coffee className="w-5 h-5 text-accent" />
-                    <span className="text-xs font-bold">Кафе</span>
+                    <span className="text-xs font-bold">Кафе рядом</span>
                   </div>
                   <div className="flex flex-col items-center gap-2 p-3 rounded-2xl bg-white/5 border border-white/5">
                     <Clock className="w-5 h-5 text-emerald-500" />
