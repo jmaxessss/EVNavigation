@@ -1,3 +1,4 @@
+
 import type {Metadata, Viewport} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
@@ -5,19 +6,24 @@ import { Toaster } from "@/components/ui/toaster";
 export const metadata: Metadata = {
   title: 'EVPulse | Умная навигация для Электромобилей',
   description: 'Интеллектуальное планирование маршрутов для владельцев электромобилей в Беларуси.',
+  manifest: '/manifest.json',
   appleWebApp: {
     title: 'EVPulse',
     statusBarStyle: 'black-translucent',
     capable: true,
   },
+  formatDetection: {
+    telephone: false,
+  },
 };
 
 export const viewport: Viewport = {
-  themeColor: '#12121A',
+  themeColor: '#0A0A0F',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
+  viewportFit: 'cover',
 };
 
 export default function RootLayout({
@@ -32,8 +38,9 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
         <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
       </head>
-      <body className="font-body antialiased bg-background text-foreground min-h-screen" suppressHydrationWarning>
+      <body className="font-body antialiased bg-background text-foreground min-h-screen overscroll-none" suppressHydrationWarning>
         {children}
         <Toaster />
       </body>
