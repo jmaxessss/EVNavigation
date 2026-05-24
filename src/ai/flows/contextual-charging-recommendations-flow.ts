@@ -23,7 +23,7 @@ const ContextualChargingRecommendationsInputSchema = z.object({
   chargingPreferences: z
     .string()
     .describe(
-      'The user\'s natural language charging preferences, e.g., "I prefer fast chargers near coffee shops, and I want to arrive with at least 30% battery."'
+      "The user's natural language charging preferences, e.g., 'I prefer fast chargers near coffee shops, and I want to arrive with at least 30% battery.'"
     ),
 });
 export type ContextualChargingRecommendationsInput = z.infer<
