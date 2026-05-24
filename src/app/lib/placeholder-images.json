@@ -1,0 +1,22 @@
+{
+  "placeholderImages": [
+    {
+      "id": "hero-ev",
+      "description": "Sleek modern electric car charging at night",
+      "imageUrl": "https://picsum.photos/seed/evpulse1/1200/800",
+      "imageHint": "electric car charging"
+    },
+    {
+      "id": "onboarding-bg",
+      "description": "Futuristic car dashboard interface",
+      "imageUrl": "https://picsum.photos/seed/evpulse2/800/600",
+      "imageHint": "car dashboard"
+    },
+    {
+      "id": "map-bg",
+      "description": "Simplified city map view",
+      "imageUrl": "https://picsum.photos/seed/evpulse3/800/800",
+      "imageHint": "city map"
+    }
+  ]
+}
