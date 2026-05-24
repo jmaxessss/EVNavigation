@@ -6,31 +6,31 @@ export default function HistoryPage() {
   const historyItems = [
     {
       type: 'trip',
-      title: 'NYC to Boston',
-      date: 'Today, 2:40 PM',
-      stats: '215km • 3h 12m',
-      consumption: '14.2 kWh/100km'
+      title: 'Минск — Брест (М1)',
+      date: 'Сегодня, 14:40',
+      stats: '345км • 3ч 45м',
+      consumption: '15.8 кВтч/100км'
     },
     {
       type: 'charge',
-      title: 'Electrify America #42',
-      date: 'Yesterday, 6:15 PM',
-      stats: '45.2 kWh added',
-      consumption: '32m charging time'
+      title: 'Malanka #21 (ТЦ "Замок")',
+      date: 'Вчера, 18:15',
+      stats: '45.2 кВтч добавлено',
+      consumption: '32м время зарядки'
     },
     {
       type: 'trip',
-      title: 'Work Commute',
-      date: 'Apr 12, 8:30 AM',
-      stats: '12km • 22m',
-      consumption: '15.1 kWh/100km'
+      title: 'Поездка в офис',
+      date: '12 Апр, 08:30',
+      stats: '12км • 22м',
+      consumption: '15.1 кВтч/100км'
     },
     {
       type: 'trip',
-      title: 'Grocery Run',
-      date: 'Apr 11, 4:20 PM',
-      stats: '4km • 10m',
-      consumption: '16.8 kWh/100km'
+      title: 'В магазин (Грин Сити)',
+      date: '11 Апр, 16:20',
+      stats: '4км • 10м',
+      consumption: '16.8 кВтч/100км'
     }
   ];
 
@@ -39,9 +39,9 @@ export default function HistoryPage() {
       <header className="mb-8">
         <Link href="/" className="inline-flex items-center gap-2 text-muted-foreground mb-6 hover:text-foreground transition-colors">
           <ArrowLeft className="w-4 h-4" />
-          <span className="text-sm font-semibold">Dashboard</span>
+          <span className="text-sm font-semibold">Дашборд</span>
         </Link>
-        <h1 className="text-3xl font-bold font-headline">Travel History</h1>
+        <h1 className="text-3xl font-bold font-headline">История поездок</h1>
       </header>
 
       <div className="space-y-4">
@@ -70,8 +70,8 @@ export default function HistoryPage() {
       </div>
 
       <section className="mt-12 p-6 rounded-3xl bg-primary/10 border border-primary/20 text-center">
-        <h4 className="font-headline font-bold text-primary mb-1">Monthly Insight</h4>
-        <p className="text-xs text-muted-foreground">You saved approx. 142kg of CO2 emissions this month compared to a gas vehicle.</p>
+        <h4 className="font-headline font-bold text-primary mb-1">Эко-вклад месяца</h4>
+        <p className="text-xs text-muted-foreground">Вы сэкономили около 142 кг выбросов CO2 в этом месяце по сравнению с ДВС.</p>
       </section>
     </main>
   );

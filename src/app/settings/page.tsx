@@ -7,23 +7,23 @@ import { Switch } from "@/components/ui/switch";
 export default function SettingsPage() {
   const settingsGroups = [
     {
-      title: "Vehicle",
+      title: "Автомобиль",
       items: [
-        { icon: Car, label: "Vehicle Profile", value: "2023 Tesla Model 3", href: "/onboarding" },
-        { icon: Shield, label: "Battery Health", value: "98% Capacity" },
+        { icon: Car, label: "Профиль авто", value: "2023 Tesla Model 3", href: "/onboarding" },
+        { icon: Shield, label: "Здоровье батареи", value: "98% емкости" },
       ]
     },
     {
-      title: "App Preferences",
+      title: "Настройки приложения",
       items: [
-        { icon: Bell, label: "Push Notifications", toggle: true, defaultChecked: true },
-        { icon: Smartphone, label: "Display Mode", value: "Always Dark" },
+        { icon: Bell, label: "Push-уведомления", toggle: true, defaultChecked: true },
+        { icon: Smartphone, label: "Режим экрана", value: "Всегда темный" },
       ]
     },
     {
-      title: "Support",
+      title: "Поддержка",
       items: [
-        { icon: HelpCircle, label: "Help Center", href: "#" },
+        { icon: HelpCircle, label: "Центр помощи", href: "#" },
       ]
     }
   ];
@@ -33,9 +33,9 @@ export default function SettingsPage() {
       <header className="mb-8">
         <Link href="/" className="inline-flex items-center gap-2 text-muted-foreground mb-6 hover:text-foreground transition-colors">
           <ArrowLeft className="w-4 h-4" />
-          <span className="text-sm font-semibold">Dashboard</span>
+          <span className="text-sm font-semibold">Дашборд</span>
         </Link>
-        <h1 className="text-3xl font-bold font-headline">Settings</h1>
+        <h1 className="text-3xl font-bold font-headline">Настройки</h1>
       </header>
 
       <div className="space-y-8">
@@ -73,17 +73,17 @@ export default function SettingsPage() {
         <section className="space-y-4 pt-4">
           <Button variant="outline" className="w-full h-14 rounded-2xl border-white/10 bg-white/5 text-muted-foreground hover:bg-white/10 hover:text-foreground oversized-tap">
             <LogOut className="w-5 h-5 mr-2" />
-            Sign Out
+            Выйти из системы
           </Button>
           <Button variant="ghost" className="w-full h-14 rounded-2xl text-destructive hover:bg-destructive/10 oversized-tap">
             <Trash2 className="w-5 h-5 mr-2" />
-            Clear Trip History
+            Очистить историю
           </Button>
         </section>
       </div>
 
       <footer className="mt-12 text-center text-[10px] text-muted-foreground opacity-40">
-        EVPULSE MOBILE APP • v1.0.24-STABLE
+        EVPULSE MOBILE • v1.0.24-BY-STABLE
       </footer>
     </main>
   );

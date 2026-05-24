@@ -25,7 +25,7 @@ export default function OnboardingPage() {
       const data = await smartVehicleOnboarding(query);
       setResult(data);
     } catch (error) {
-      setResult({ error: "Failed to connect to the AI service. Please try again." });
+      setResult({ error: "Не удалось подключиться к ИИ-сервису. Попробуйте еще раз." });
     } finally {
       setIsLoading(false);
     }
@@ -38,10 +38,10 @@ export default function OnboardingPage() {
       <header className="mb-8 pt-4">
         <Link href="/" className="inline-flex items-center gap-2 text-muted-foreground mb-6 hover:text-foreground transition-colors">
           <ArrowLeft className="w-4 h-4" />
-          <span className="text-sm font-semibold">Back to Dashboard</span>
+          <span className="text-sm font-semibold">На главную</span>
         </Link>
-        <h1 className="text-3xl font-bold font-headline mb-2">Vehicle Sync</h1>
-        <p className="text-muted-foreground text-sm">Tell us what you drive, and we'll pull all technical specs automatically.</p>
+        <h1 className="text-3xl font-bold font-headline mb-2">Настройка авто</h1>
+        <p className="text-muted-foreground text-sm">Просто напишите марку и модель вашего авто, и мы загрузим все технические данные.</p>
       </header>
 
       <section className="space-y-6 flex-1">
@@ -51,7 +51,7 @@ export default function OnboardingPage() {
             <Input 
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="e.g. My car is a 2023 Tesla Model 3" 
+              placeholder="Напр.: Моя машина Tesla Model 3 2023" 
               className="pl-12 h-14 bg-secondary border-none rounded-2xl font-medium placeholder:text-muted-foreground focus-visible:ring-primary oversized-tap"
             />
           </div>
@@ -62,7 +62,7 @@ export default function OnboardingPage() {
             {isLoading ? (
               <Loader2 className="w-6 h-6 animate-spin" />
             ) : (
-              "Identify Vehicle"
+              "Определить автомобиль"
             )}
           </Button>
         </form>
@@ -77,27 +77,27 @@ export default function OnboardingPage() {
                   </div>
                   <div>
                     <CardTitle className="text-xl font-headline">{result.make} {result.model}</CardTitle>
-                    <CardDescription>{result.year} Model Identified</CardDescription>
+                    <CardDescription>Модель {result.year} года определена</CardDescription>
                   </div>
                 </CardHeader>
                 <CardContent className="grid grid-cols-2 gap-4 pt-2">
                   <div className="p-4 rounded-2xl bg-white/5 border border-white/5">
-                    <p className="text-[10px] uppercase font-bold text-muted-foreground mb-1">Battery</p>
-                    <p className="text-lg font-bold font-headline">{result.batteryCapacityKWh}<span className="text-xs ml-1 font-normal opacity-60">kWh</span></p>
+                    <p className="text-[10px] uppercase font-bold text-muted-foreground mb-1">Батарея</p>
+                    <p className="text-lg font-bold font-headline">{result.batteryCapacityKWh}<span className="text-xs ml-1 font-normal opacity-60">кВтч</span></p>
                   </div>
                   <div className="p-4 rounded-2xl bg-white/5 border border-white/5">
-                    <p className="text-[10px] uppercase font-bold text-muted-foreground mb-1">Port Type</p>
+                    <p className="text-[10px] uppercase font-bold text-muted-foreground mb-1">Разъем</p>
                     <p className="text-lg font-bold font-headline">{result.chargingPortType}</p>
                   </div>
                   <div className="p-4 rounded-2xl bg-white/5 border border-white/5 col-span-2">
-                    <p className="text-[10px] uppercase font-bold text-muted-foreground mb-1">Consumption Rate</p>
-                    <p className="text-lg font-bold font-headline">{result.averageConsumptionWhPerKm}<span className="text-xs ml-1 font-normal opacity-60">Wh/km</span></p>
+                    <p className="text-[10px] uppercase font-bold text-muted-foreground mb-1">Расход энергии</p>
+                    <p className="text-lg font-bold font-headline">{result.averageConsumptionWhPerKm}<span className="text-xs ml-1 font-normal opacity-60">Втч/км</span></p>
                   </div>
                   <Button 
                     onClick={() => router.push('/')}
                     className="col-span-2 mt-4 bg-emerald-500 hover:bg-emerald-600 rounded-2xl h-12 font-headline"
                   >
-                    Confirm & Proceed
+                    Все верно, продолжить
                   </Button>
                 </CardContent>
               </Card>
@@ -108,7 +108,7 @@ export default function OnboardingPage() {
                     <AlertCircle className="w-6 h-6 text-destructive" />
                   </div>
                   <div>
-                    <CardTitle className="text-xl font-headline">Sync Failed</CardTitle>
+                    <CardTitle className="text-xl font-headline">Ошибка поиска</CardTitle>
                     <CardDescription className="text-destructive/80">{(result as any).error}</CardDescription>
                   </div>
                 </CardHeader>
@@ -119,7 +119,7 @@ export default function OnboardingPage() {
       </section>
 
       <footer className="mt-auto pt-8 text-center text-xs text-muted-foreground opacity-60">
-        EVPulse AI Engine v2.4 • Dynamic Spec Retrieval
+        EVPulse AI Engine v2.4 • Беларусь
       </footer>
     </main>
   );

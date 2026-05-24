@@ -32,9 +32,9 @@ export default function NavigationPage() {
     setIsPlanning(true);
     try {
       const result = await contextualChargingRecommendations({
-        routeDescription: `Trip to ${destination}`,
+        routeDescription: `Поездка в ${destination}`,
         currentBatteryPercentage: 82,
-        chargingPreferences: "I prefer fast chargers near coffee shops and want to arrive with at least 20% battery."
+        chargingPreferences: "Я предпочитаю быстрые зарядки Malanka рядом с кафе и хочу приехать с остатком не менее 20%."
       });
       setRecommendations(result);
     } catch (error) {
@@ -76,7 +76,7 @@ export default function NavigationPage() {
           <div className="relative flex-1">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
             <Input 
-              placeholder="Where to?" 
+              placeholder="Куда едем?" 
               value={destination}
               onChange={(e) => setDestination(e.target.value)}
               className="pl-12 h-14 bg-card/80 backdrop-blur-xl border-white/5 rounded-2xl text-lg font-headline shadow-2xl focus-visible:ring-primary oversized-tap" 
@@ -86,7 +86,7 @@ export default function NavigationPage() {
               className="absolute right-2 top-2 h-10 px-6 rounded-xl bg-primary oversized-tap"
               disabled={isPlanning}
             >
-              {isPlanning ? <Loader2 className="w-5 h-5 animate-spin" /> : "Go"}
+              {isPlanning ? <Loader2 className="w-5 h-5 animate-spin" /> : "ОК"}
             </Button>
           </div>
           <Button variant="ghost" size="icon" className="glass-card rounded-2xl oversized-tap">
@@ -120,53 +120,53 @@ export default function NavigationPage() {
                     <Battery className="w-8 h-8 text-primary" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold font-headline">82% <span className="text-sm font-normal text-muted-foreground ml-1">Remaining</span></h3>
-                    <p className="text-sm text-accent font-semibold">342 km available</p>
+                    <h3 className="text-xl font-bold font-headline">82% <span className="text-sm font-normal text-muted-foreground ml-1">Заряда</span></h3>
+                    <p className="text-sm text-accent font-semibold">342 км доступно</p>
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="text-sm font-bold">READY</p>
-                  <p className="text-xs text-muted-foreground">System Optimized</p>
+                  <p className="text-sm font-bold">ГОТОВ</p>
+                  <p className="text-xs text-muted-foreground">Система в норме</p>
                 </div>
               </div>
             ) : (
               <div className="space-y-6">
                 <div className="flex justify-between items-start">
                   <div>
-                    <h2 className="text-2xl font-bold font-headline">Tesla Supercharger</h2>
-                    <p className="text-sm text-muted-foreground">Optimal Stop • {recommendations.maxDetourTimeMinutes || 8} min detour</p>
+                    <h2 className="text-2xl font-bold font-headline">Malanka Supercharge</h2>
+                    <p className="text-sm text-muted-foreground">Оптимальная точка • +{recommendations.maxDetourTimeMinutes || 8} мин в пути</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-xl font-bold font-headline text-accent">12 min</p>
-                    <p className="text-xs text-muted-foreground">Arrival in</p>
+                    <p className="text-xl font-bold font-headline text-accent">12 мин</p>
+                    <p className="text-xs text-muted-foreground">Прибытие через</p>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-3 gap-4">
                   <div className="flex flex-col items-center gap-2 p-3 rounded-2xl bg-white/5 border border-white/5">
                     <Zap className="w-5 h-5 text-primary" />
-                    <span className="text-xs font-bold">{recommendations.preferredChargerTypes?.[0] || 'Ultra Fast'}</span>
+                    <span className="text-xs font-bold">{recommendations.preferredChargerTypes?.[0] || 'CCS / 150kW'}</span>
                   </div>
                   <div className="flex flex-col items-center gap-2 p-3 rounded-2xl bg-white/5 border border-white/5">
                     <Coffee className="w-5 h-5 text-accent" />
-                    <span className="text-xs font-bold">Coffee</span>
+                    <span className="text-xs font-bold">Кафе</span>
                   </div>
                   <div className="flex flex-col items-center gap-2 p-3 rounded-2xl bg-white/5 border border-white/5">
                     <Clock className="w-5 h-5 text-emerald-500" />
-                    <span className="text-xs font-bold">20m Stop</span>
+                    <span className="text-xs font-bold">20м стоп</span>
                   </div>
                 </div>
 
                 <div className="space-y-2">
                   <div className="flex justify-between text-xs font-bold uppercase tracking-wider text-muted-foreground px-1">
-                    <span>Charge Status</span>
-                    <span>Arrival: {recommendations.minBatteryArrivalPercentage || '20'}%</span>
+                    <span>Прогноз батареи</span>
+                    <span>Прибытие: {recommendations.minBatteryArrivalPercentage || '20'}%</span>
                   </div>
                   <Progress value={20} className="h-2 bg-secondary" />
                 </div>
 
                 <Button className="w-full h-14 bg-primary rounded-2xl text-lg font-headline oversized-tap">
-                  Navigate to Station
+                  Построить маршрут
                 </Button>
               </div>
             )}

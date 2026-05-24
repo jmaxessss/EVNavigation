@@ -1,36 +1,32 @@
 'use server';
 /**
- * @fileOverview A Genkit flow for extracting structured charging preferences from natural language input.
- *
- * - contextualChargingRecommendations - A function that processes user charging preferences.
- * - ContextualChargingRecommendationsInput - The input type for the contextualChargingRecommendations function.
- * - ContextualChargingRecommendationsOutput - The return type for the contextualChargingRecommendations function.
+ * @fileOverview Genkit flow для извлечения предпочтений по зарядке из естественного языка.
  */
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
-// Input Schema
+// Входная схема
 const ContextualChargingRecommendationsInputSchema = z.object({
   routeDescription: z
     .string()
-    .describe('A brief description of the current route, e.g., "My trip from NYC to Boston".'),
+    .describe('Описание текущего маршрута, например, "Поездка из Минска в Гомель".'),
   currentBatteryPercentage: z
     .number()
     .min(0)
     .max(100)
-    .describe('The current battery percentage of the EV.'),
+    .describe('Текущий процент заряда электромобиля.'),
   chargingPreferences: z
     .string()
     .describe(
-      "The user's natural language charging preferences, e.g., 'I prefer fast chargers near coffee shops, and I want to arrive with at least 30% battery.'"
+      'Предпочтения пользователя на естественном языке, например: "Хочу быструю зарядку Malanka рядом с кафе, приехать с запасом 20%".'
     ),
 });
 export type ContextualChargingRecommendationsInput = z.infer<
   typeof ContextualChargingRecommendationsInputSchema
 >;
 
-// Output Schema
+// Выходная схема
 const ContextualChargingRecommendationsOutputSchema = z.object({
   minBatteryArrivalPercentage: z
     .number()
@@ -38,36 +34,36 @@ const ContextualChargingRecommendationsOutputSchema = z.object({
     .max(100)
     .optional()
     .describe(
-      'The minimum desired battery percentage upon arrival at the destination. Extract numbers like "30%" or "one quarter battery".'
+      'Минимальный желаемый процент заряда по прибытии.'
     ),
   preferredChargerTypes: z
     .array(z.string())
     .optional()
     .describe(
-      'An array of preferred charger types, e.g., ["DC Fast", "Level 2"]. Look for keywords like "fast chargers", "quick charge", "slow charge".'
+      'Массив предпочтительных типов зарядных станций (например, DC Fast, Level 2).'
     ),
   preferredAmenities: z
     .array(z.string())
     .optional()
     .describe(
-      'An array of amenities the user prefers near charging stations, e.g., ["coffee shop", "restaurant", "restroom"]. Look for "near coffee shops", "places to eat", "a restroom nearby".'
+      'Массив удобств рядом (кафе, ресторан, туалет).'
     ),
   maxDetourTimeMinutes: z
     .number()
     .optional()
     .describe(
-      'The maximum acceptable detour time in minutes for a charging stop. Extract numbers like "not too far off route", "within 10 minutes".'
+      'Максимальное время отклонения от маршрута в минутах.'
     ),
   prioritizeCost: z
     .boolean()
     .optional()
     .describe(
-      'Indicates if the user prioritizes lower charging cost. Look for "cheap charging", "affordable options".'
+      'Приоритет низкой стоимости зарядки.'
     ),
   generalNotes: z
     .string()
     .optional()
-    .describe('Any other relevant preferences or notes that could not be categorized.'),
+    .describe('Любые другие примечания.'),
 });
 export type ContextualChargingRecommendationsOutput = z.infer<
   typeof ContextualChargingRecommendationsOutputSchema
@@ -77,24 +73,14 @@ const prompt = ai.definePrompt({
   name: 'contextualChargingRecommendationsPrompt',
   input: { schema: ContextualChargingRecommendationsInputSchema },
   output: { schema: ContextualChargingRecommendationsOutputSchema },
-  prompt: `You are an AI assistant designed to understand an EV driver's charging preferences and extract them into a structured JSON format.
-The user will provide their current route details, current battery percentage, and their natural language charging preferences.
+  prompt: `Вы — ИИ-помощник, помогающий водителю электромобиля в Беларуси. 
+Ваша цель — понять предпочтения пользователя и извлечь их в структурированный JSON.
 
-Your goal is to parse the 'chargingPreferences' text and extract the following information:
-- minBatteryArrivalPercentage: The minimum desired battery percentage upon arrival at the destination. If not specified, do not include.
-- preferredChargerTypes: An array of preferred charger types (e.g., "DC Fast", "Level 2"). If not specified, do not include.
-- preferredAmenities: An array of amenities the user prefers near charging stations (e.g., "coffee shop", "restaurant"). If not specified, do not include.
-- maxDetourTimeMinutes: The maximum acceptable detour time in minutes for a charging stop. If not specified, do not include.
-- prioritizeCost: A boolean indicating if the user prioritizes lower charging cost. If not specified, do not include.
-- generalNotes: Any other relevant preferences or notes that could not be categorized. If not specified, do not include.
+Маршрут: {{{routeDescription}}}
+Заряд: {{{currentBatteryPercentage}}}%
+Текст предпочтений: {{{chargingPreferences}}}
 
-If a preference is mentioned, extract it. If it is not mentioned, omit the field from the JSON output.
-Be precise and only extract what is explicitly stated or strongly implied by the user's preferences.
-
-Current Route Description: {{{routeDescription}}}
-Current Battery Percentage: {{{currentBatteryPercentage}}}%
-
-User's Charging Preferences: {{{chargingPreferences}}}`,
+Особое внимание уделите брендам (например, Malanka) и типам коннекторов (CCS, Chademo).`,
 });
 
 export async function contextualChargingRecommendations(
