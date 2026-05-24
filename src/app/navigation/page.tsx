@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -13,7 +14,8 @@ import {
   Coffee,
   Clock,
   ArrowLeft,
-  Loader2
+  Loader2,
+  CheckCircle2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -21,15 +23,30 @@ import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { contextualChargingRecommendations } from "@/ai/flows/contextual-charging-recommendations-flow";
 import Link from "next/link";
+import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 export default function NavigationPage() {
   const [destination, setDestination] = useState("");
   const [isPlanning, setIsPlanning] = useState(false);
   const [recommendations, setRecommendations] = useState<any>(null);
+  const [isNavigating, setIsNavigating] = useState(false);
+  const { toast } = useToast();
+  const router = useRouter();
 
   const handlePlanRoute = async () => {
-    if (!destination) return;
+    if (!destination) {
+      toast({
+        variant: "destructive",
+        title: "Ошибка",
+        description: "Пожалуйста, введите пункт назначения.",
+      });
+      return;
+    }
+    
     setIsPlanning(true);
+    setRecommendations(null);
+    
     try {
       const result = await contextualChargingRecommendations({
         routeDescription: `Поездка в ${destination}`,
@@ -38,10 +55,25 @@ export default function NavigationPage() {
       });
       setRecommendations(result);
     } catch (error) {
-      console.error(error);
+      toast({
+        variant: "destructive",
+        title: "Ошибка ИИ",
+        description: "Не удалось построить оптимальный маршрут. Попробуйте позже.",
+      });
     } finally {
       setIsPlanning(false);
     }
+  };
+
+  const handleStartNavigation = () => {
+    setIsNavigating(true);
+    setTimeout(() => {
+      toast({
+        title: "Маршрут построен",
+        description: `Следуйте указаниям навигатора до ${destination}.`,
+      });
+      router.push('/');
+    }, 1500);
   };
 
   return (
@@ -49,10 +81,8 @@ export default function NavigationPage() {
       {/* Background Map Placeholder */}
       <div className="absolute inset-0 z-0">
         <div className="w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-900/10 via-background to-background">
-          {/* Simulated grid for map feel */}
           <div className="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px]"></div>
           
-          {/* Simulated Route Path */}
           {recommendations && (
             <div className="absolute top-1/2 left-1/4 right-1/4 h-1 bg-primary/40 rounded-full blur-[1px] animate-pulse">
                <div className="absolute -top-1 left-0 w-3 h-3 bg-primary rounded-full shadow-[0_0_15px_rgba(94,94,237,1)]"></div>
@@ -84,7 +114,7 @@ export default function NavigationPage() {
             <Button 
               onClick={handlePlanRoute}
               className="absolute right-2 top-2 h-10 px-6 rounded-xl bg-primary oversized-tap"
-              disabled={isPlanning}
+              disabled={isPlanning || isNavigating}
             >
               {isPlanning ? <Loader2 className="w-5 h-5 animate-spin" /> : "ОК"}
             </Button>
@@ -94,16 +124,6 @@ export default function NavigationPage() {
           </Button>
         </div>
       </header>
-
-      {/* Side HUD Elements */}
-      <div className="absolute left-6 bottom-32 flex flex-col gap-4 z-10 hidden sm:flex">
-        <Button size="icon" className="glass-card h-14 w-14 rounded-2xl oversized-tap">
-          <MapIcon className="w-6 h-6" />
-        </Button>
-        <Button size="icon" className="glass-card h-14 w-14 rounded-2xl oversized-tap">
-          <Menu className="w-6 h-6" />
-        </Button>
-      </div>
 
       {/* Bottom Route Panel Overlay */}
       <div className="absolute bottom-0 left-0 right-0 p-6 z-10">
@@ -162,11 +182,15 @@ export default function NavigationPage() {
                     <span>Прогноз батареи</span>
                     <span>Прибытие: {recommendations.minBatteryArrivalPercentage || '20'}%</span>
                   </div>
-                  <Progress value={20} className="h-2 bg-secondary" />
+                  <Progress value={recommendations.minBatteryArrivalPercentage || 20} className="h-2 bg-secondary" />
                 </div>
 
-                <Button className="w-full h-14 bg-primary rounded-2xl text-lg font-headline oversized-tap">
-                  Построить маршрут
+                <Button 
+                  onClick={handleStartNavigation}
+                  disabled={isNavigating}
+                  className="w-full h-14 bg-primary rounded-2xl text-lg font-headline oversized-tap flex items-center justify-center gap-2"
+                >
+                  {isNavigating ? <Loader2 className="w-6 h-6 animate-spin" /> : "Построить маршрут"}
                 </Button>
               </div>
             )}

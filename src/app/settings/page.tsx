@@ -1,10 +1,33 @@
+
+"use client";
+
 import { ArrowLeft, Car, Shield, Bell, Smartphone, HelpCircle, ChevronRight, LogOut, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
+import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 export default function SettingsPage() {
+  const { toast } = useToast();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    toast({
+      title: "Выход из системы",
+      description: "Вы будете перенаправлены на главную страницу (демо).",
+    });
+    setTimeout(() => router.push('/'), 1000);
+  };
+
+  const handleClearHistory = () => {
+    toast({
+      title: "История очищена",
+      description: "Все записи о поездках были удалены из памяти устройства.",
+    });
+  };
+
   const settingsGroups = [
     {
       title: "Автомобиль",
@@ -47,6 +70,7 @@ export default function SettingsPage() {
                 {group.items.map((item, i) => (
                   <div 
                     key={i} 
+                    onClick={() => item.href && router.push(item.href)}
                     className={`flex items-center justify-between p-5 ${i !== group.items.length - 1 ? 'border-b border-white/5' : ''} hover:bg-white/5 transition-colors cursor-pointer group oversized-tap`}
                   >
                     <div className="flex items-center gap-4">
@@ -71,11 +95,19 @@ export default function SettingsPage() {
         ))}
 
         <section className="space-y-4 pt-4">
-          <Button variant="outline" className="w-full h-14 rounded-2xl border-white/10 bg-white/5 text-muted-foreground hover:bg-white/10 hover:text-foreground oversized-tap">
+          <Button 
+            onClick={handleLogout}
+            variant="outline" 
+            className="w-full h-14 rounded-2xl border-white/10 bg-white/5 text-muted-foreground hover:bg-white/10 hover:text-foreground oversized-tap"
+          >
             <LogOut className="w-5 h-5 mr-2" />
             Выйти из системы
           </Button>
-          <Button variant="ghost" className="w-full h-14 rounded-2xl text-destructive hover:bg-destructive/10 oversized-tap">
+          <Button 
+            onClick={handleClearHistory}
+            variant="ghost" 
+            className="w-full h-14 rounded-2xl text-destructive hover:bg-destructive/10 oversized-tap"
+          >
             <Trash2 className="w-5 h-5 mr-2" />
             Очистить историю
           </Button>
