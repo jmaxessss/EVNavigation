@@ -1,8 +1,6 @@
-
 import Link from "next/link";
 import { 
   Battery, 
-  MapPin, 
   Zap, 
   History, 
   Settings, 
@@ -10,9 +8,8 @@ import {
   ChevronRight,
   Car,
   TrendingUp,
-  Clock,
   Sparkles,
-  Search
+  MapPin
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -20,165 +17,120 @@ import { Button } from "@/components/ui/button";
 
 export default function DashboardPage() {
   return (
-    <main className="flex flex-col min-h-screen pb-24">
-      {/* Header Section */}
-      <header className="px-6 pt-8 pb-4 flex justify-between items-center">
+    <main className="flex flex-col min-h-screen pb-24 max-w-lg mx-auto bg-white md:shadow-xl">
+      {/* Header */}
+      <header className="px-6 pt-10 pb-6 flex justify-between items-end">
         <div>
-          <h1 className="text-3xl font-bold font-headline text-primary">EVPulse</h1>
-          <p className="text-muted-foreground text-sm">Статус: Система готова</p>
+          <h1 className="text-4xl font-bold font-headline text-slate-950">EVPulse</h1>
+          <p className="text-slate-500 text-sm font-medium">Добрый день, Александр</p>
         </div>
-        <div className="bg-primary/10 p-2 rounded-full border border-primary/20">
-          <Car className="w-6 h-6 text-primary" />
+        <div className="bg-slate-100 p-3 rounded-full">
+          <Car className="w-6 h-6 text-slate-600" />
         </div>
       </header>
 
-      {/* Main Stats Card */}
-      <section className="px-4 mb-6">
-        <Card className="glass-card overflow-hidden border-none shadow-primary/5">
+      {/* Main Status */}
+      <section className="px-6 mb-8">
+        <Card className="minimal-card overflow-hidden">
           <CardContent className="p-6">
-            <div className="flex justify-between items-start mb-6">
+            <div className="flex justify-between items-center mb-6">
               <div>
-                <p className="text-xs uppercase tracking-wider text-muted-foreground font-semibold mb-1">Запас хода</p>
-                <h2 className="text-4xl font-bold font-headline">342<span className="text-xl text-accent ml-1">км</span></h2>
+                <p className="text-[10px] uppercase tracking-widest text-slate-400 font-bold mb-1">Запас хода</p>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-5xl font-bold font-headline">342</span>
+                  <span className="text-lg text-accent font-bold">км</span>
+                </div>
               </div>
               <div className="text-right">
-                <p className="text-xs uppercase tracking-wider text-muted-foreground font-semibold mb-1">Заряд батареи</p>
-                <div className="flex items-center justify-end gap-2">
-                  <span className="text-2xl font-bold">82%</span>
-                  <Battery className="w-6 h-6 text-emerald-500 fill-emerald-500/20" />
-                </div>
+                <Battery className="w-10 h-10 text-emerald-500 mb-1 ml-auto" />
+                <span className="text-2xl font-bold">82%</span>
               </div>
             </div>
             
-            <Progress value={82} className="h-3 bg-secondary mb-2" />
-            <div className="flex justify-between text-[10px] text-muted-foreground font-medium">
+            <Progress value={82} className="h-2 bg-slate-100 mb-2" />
+            <div className="flex justify-between text-[10px] text-slate-400 font-bold uppercase">
               <span>0%</span>
-              <span className="text-primary font-bold">ОПТИМАЛЬНО: 20-80%</span>
+              <span className="text-emerald-500">Заряд в норме</span>
               <span>100%</span>
             </div>
           </CardContent>
         </Card>
       </section>
 
-      {/* AI Assistant Banner */}
-      <section className="px-4 mb-6">
-        <Link href="/navigation">
-          <Card className="bg-gradient-to-br from-primary/20 to-accent/10 border-primary/20 hover:from-primary/30 transition-all cursor-pointer">
-            <CardContent className="p-4 flex items-center gap-4">
-              <div className="p-3 bg-primary rounded-2xl shadow-lg shadow-primary/20 relative">
-                <Sparkles className="w-6 h-6 text-white" />
-                <span className="absolute -top-1 -right-1 flex h-3 w-3">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-accent"></span>
-                </span>
-              </div>
-              <div className="flex-1">
-                <div className="flex items-center gap-2">
-                  <h3 className="text-sm font-bold font-headline">ИИ-Планирование</h3>
-                  <span className="text-[9px] bg-primary/20 text-primary px-1.5 py-0.5 rounded-md font-bold uppercase">Beta</span>
-                </div>
-                <p className="text-[11px] text-muted-foreground">Маршруты с учетом зарядок Malanka и ваших пожеланий</p>
-              </div>
-              <ChevronRight className="w-5 h-5 text-muted-foreground" />
-            </CardContent>
-          </Card>
-        </Link>
-      </section>
-
-      {/* Action Grid */}
-      <section className="px-4 grid grid-cols-2 gap-4 mb-8">
+      {/* Quick Actions */}
+      <section className="px-6 grid grid-cols-2 gap-4 mb-8">
         <Link href="/navigation" className="col-span-2">
-          <Button className="w-full h-20 text-lg font-headline flex justify-between px-6 rounded-2xl bg-primary hover:bg-primary/90 oversized-tap shadow-lg shadow-primary/20">
-            <div className="flex items-center gap-3">
-              <Navigation className="w-6 h-6" />
-              <span>Начать поездку</span>
-            </div>
-            <Search className="w-6 h-6 opacity-50" />
+          <Button className="w-full h-16 text-lg font-headline flex items-center justify-center gap-3 rounded-2xl bg-accent hover:bg-accent/90 shadow-blue-200 shadow-lg text-white">
+            <MapPin className="w-6 h-6" />
+            <span>Найти зарядку</span>
           </Button>
         </Link>
         
         <Link href="/onboarding">
-          <Card className="glass-card border-none h-32 hover:bg-white/5 transition-colors cursor-pointer oversized-tap">
+          <Card className="minimal-card h-32 hover:border-accent/30 cursor-pointer">
             <CardContent className="p-4 flex flex-col justify-between h-full">
-              <div className="flex justify-between items-start">
-                <div className="p-2 bg-accent/20 rounded-lg w-fit">
-                  <Car className="w-6 h-6 text-accent" />
-                </div>
-                <Sparkles className="w-4 h-4 text-primary opacity-50" />
+              <div className="p-2 bg-slate-100 rounded-xl w-fit">
+                <Sparkles className="w-5 h-5 text-slate-600" />
               </div>
               <div>
-                <p className="font-semibold text-sm">ИИ-Профиль</p>
-                <p className="text-[10px] text-muted-foreground">Умная настройка авто</p>
+                <p className="font-bold text-sm">ИИ-Профиль</p>
+                <p className="text-[10px] text-slate-400 font-medium">Настройка авто</p>
               </div>
             </CardContent>
           </Card>
         </Link>
 
         <Link href="/history">
-          <Card className="glass-card border-none h-32 hover:bg-white/5 transition-colors cursor-pointer oversized-tap">
+          <Card className="minimal-card h-32 hover:border-accent/30 cursor-pointer">
             <CardContent className="p-4 flex flex-col justify-between h-full">
-              <div className="p-2 bg-emerald-500/20 rounded-lg w-fit">
-                <History className="w-6 h-6 text-emerald-500" />
+              <div className="p-2 bg-slate-100 rounded-xl w-fit">
+                <History className="w-5 h-5 text-slate-600" />
               </div>
               <div>
-                <p className="font-semibold text-sm">История</p>
-                <p className="text-[10px] text-muted-foreground">Статистика поездок</p>
+                <p className="font-bold text-sm">Статистика</p>
+                <p className="text-[10px] text-slate-400 font-medium">Мои поездки</p>
               </div>
             </CardContent>
           </Card>
         </Link>
       </section>
 
-      {/* Analytics Section */}
-      <section className="px-4 mb-8">
-        <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4 ml-2">Аналитика эффективности</h3>
-        <Card className="glass-card border-none">
-          <CardContent className="p-4 space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-white/5">
-                  <TrendingUp className="w-4 h-4 text-accent" />
-                </div>
-                <div>
-                  <p className="text-xs text-muted-foreground">Средний расход</p>
-                  <p className="text-sm font-bold">14.2 кВтч/100км</p>
-                </div>
-              </div>
-              <div className="text-right">
-                <span className="text-[9px] bg-emerald-500/10 text-emerald-500 px-2 py-0.5 rounded-full font-bold">+12% лучше нормы</span>
-              </div>
-            </div>
-            
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-white/5">
-                <Clock className="w-4 h-4 text-accent" />
+      {/* Analytics Brief */}
+      <section className="px-6 mb-8">
+        <h3 className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-4">Эффективность</h3>
+        <Card className="minimal-card">
+          <CardContent className="p-5 flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="p-2 bg-emerald-50 rounded-xl">
+                <TrendingUp className="w-5 h-5 text-emerald-600" />
               </div>
               <div>
-                <p className="text-xs text-muted-foreground">Время в пути за неделю</p>
-                <p className="text-sm font-bold">12ч 45м</p>
+                <p className="text-xs text-slate-500 font-medium">Средний расход</p>
+                <p className="text-sm font-bold">14.2 кВтч/100км</p>
               </div>
             </div>
+            <ChevronRight className="w-4 h-4 text-slate-300" />
           </CardContent>
         </Card>
       </section>
 
-      {/* Bottom Tab Bar */}
-      <nav className="fixed bottom-0 left-0 right-0 h-20 glass-card border-t border-white/5 flex items-center justify-around px-4 z-50 rounded-t-[2rem]">
-        <Link href="/" className="flex flex-col items-center gap-1 text-primary">
+      {/* Navigation Bar */}
+      <nav className="fixed bottom-0 left-0 right-0 h-20 bg-white/80 backdrop-blur-lg border-t border-slate-100 flex items-center justify-around px-8 z-50 max-w-lg mx-auto">
+        <Link href="/" className="flex flex-col items-center gap-1 text-accent">
           <Zap className="w-6 h-6" />
-          <span className="text-[10px] font-bold">Главная</span>
+          <span className="text-[10px] font-bold uppercase tracking-tighter">Главная</span>
         </Link>
-        <Link href="/navigation" className="flex flex-col items-center gap-1 text-muted-foreground hover:text-foreground">
+        <Link href="/navigation" className="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-600 transition-colors">
           <Navigation className="w-6 h-6" />
-          <span className="text-[10px] font-bold">Карта</span>
+          <span className="text-[10px] font-bold uppercase tracking-tighter">Карта</span>
         </Link>
-        <Link href="/history" className="flex flex-col items-center gap-1 text-muted-foreground hover:text-foreground">
+        <Link href="/history" className="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-600 transition-colors">
           <History className="w-6 h-6" />
-          <span className="text-[10px] font-bold">История</span>
+          <span className="text-[10px] font-bold uppercase tracking-tighter">Архив</span>
         </Link>
-        <Link href="/settings" className="flex flex-col items-center gap-1 text-muted-foreground hover:text-foreground">
+        <Link href="/settings" className="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-600 transition-colors">
           <Settings className="w-6 h-6" />
-          <span className="text-[10px] font-bold">Настройки</span>
+          <span className="text-[10px] font-bold uppercase tracking-tighter">Инфо</span>
         </Link>
       </nav>
     </main>

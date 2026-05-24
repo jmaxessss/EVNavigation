@@ -1,4 +1,3 @@
-
 "use client";
 
 import { ArrowLeft, Car, Shield, Bell, Smartphone, HelpCircle, ChevronRight, LogOut, Trash2 } from "lucide-react";
@@ -14,78 +13,62 @@ export default function SettingsPage() {
   const router = useRouter();
 
   const handleLogout = () => {
-    toast({
-      title: "Выход из системы",
-      description: "Вы будете перенаправлены на главную страницу (демо).",
-    });
+    toast({ title: "Выход выполнен", description: "До скорой встречи!" });
     setTimeout(() => router.push('/'), 1000);
-  };
-
-  const handleClearHistory = () => {
-    toast({
-      title: "История очищена",
-      description: "Все записи о поездках были удалены из памяти устройства.",
-    });
   };
 
   const settingsGroups = [
     {
-      title: "Автомобиль",
+      title: "Транспорт",
       items: [
-        { icon: Car, label: "Профиль авто", value: "2023 Tesla Model 3", href: "/onboarding" },
-        { icon: Shield, label: "Здоровье батареи", value: "98% емкости" },
+        { icon: Car, label: "Мой автомобиль", value: "Tesla Model 3", href: "/onboarding" },
+        { icon: Shield, label: "Батарея", value: "SOH: 98%" },
       ]
     },
     {
-      title: "Настройки приложения",
+      title: "Система",
       items: [
-        { icon: Bell, label: "Push-уведомления", toggle: true, defaultChecked: true },
-        { icon: Smartphone, label: "Режим экрана", value: "Всегда темный" },
-      ]
-    },
-    {
-      title: "Поддержка",
-      items: [
-        { icon: HelpCircle, label: "Центр помощи", href: "#" },
+        { icon: Bell, label: "Уведомления", toggle: true, defaultChecked: true },
+        { icon: Smartphone, label: "Интерфейс", value: "Светлая тема" },
       ]
     }
   ];
 
   return (
-    <main className="min-h-screen pb-24 px-6 pt-8 max-w-lg mx-auto">
-      <header className="mb-8">
-        <Link href="/" className="inline-flex items-center gap-2 text-muted-foreground mb-6 hover:text-foreground transition-colors">
+    <main className="min-h-screen pb-24 px-6 pt-12 max-w-lg mx-auto bg-white">
+      <header className="mb-10">
+        <Link href="/" className="inline-flex items-center gap-2 text-slate-400 mb-6 hover:text-slate-900 transition-colors">
           <ArrowLeft className="w-4 h-4" />
-          <span className="text-sm font-semibold">Дашборд</span>
+          <span className="text-xs font-bold uppercase tracking-widest">Дашборд</span>
         </Link>
-        <h1 className="text-3xl font-bold font-headline">Настройки</h1>
+        <h1 className="text-4xl font-bold font-headline text-slate-950">Настройки</h1>
       </header>
 
-      <div className="space-y-8">
+      <div className="space-y-10">
         {settingsGroups.map((group, idx) => (
           <section key={idx}>
-            <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4 ml-2">{group.title}</h3>
-            <Card className="glass-card border-none overflow-hidden">
+            <h3 className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-4 ml-2">{group.title}</h3>
+            <Card className="minimal-card border-none overflow-hidden bg-slate-50/50">
               <CardContent className="p-0">
                 {group.items.map((item, i) => (
                   <div 
                     key={i} 
                     onClick={() => item.href && router.push(item.href)}
-                    className={`flex items-center justify-between p-5 ${i !== group.items.length - 1 ? 'border-b border-white/5' : ''} hover:bg-white/5 transition-colors cursor-pointer group oversized-tap`}
+                    className={`flex items-center justify-between p-5 ${i !== group.items.length - 1 ? 'border-b border-slate-100' : ''} hover:bg-slate-100/50 cursor-pointer group`}
                   >
                     <div className="flex items-center gap-4">
-                      <div className="p-2 rounded-xl bg-white/5 group-hover:bg-primary/20 transition-colors">
-                        <item.icon className="w-5 h-5 text-primary" />
+                      <div className="p-2 bg-white rounded-lg shadow-sm">
+                        <item.icon className="w-5 h-5 text-slate-600" />
                       </div>
                       <div>
-                        <p className="text-sm font-semibold">{item.label}</p>
-                        {item.value && <p className="text-xs text-muted-foreground">{item.value}</p>}
+                        <p className="text-sm font-bold text-slate-900">{item.label}</p>
+                        {item.value && <p className="text-[10px] font-bold text-slate-400 uppercase">{item.value}</p>}
                       </div>
                     </div>
                     {item.toggle ? (
-                      <Switch defaultChecked={item.defaultChecked} />
+                      <Switch defaultChecked={item.defaultChecked} className="data-[state=checked]:bg-accent" />
                     ) : (
-                      <ChevronRight className="w-5 h-5 text-muted-foreground" />
+                      <ChevronRight className="w-4 h-4 text-slate-300" />
                     )}
                   </div>
                 ))}
@@ -94,29 +77,24 @@ export default function SettingsPage() {
           </section>
         ))}
 
-        <section className="space-y-4 pt-4">
+        <div className="space-y-3 pt-6">
           <Button 
             onClick={handleLogout}
-            variant="outline" 
-            className="w-full h-14 rounded-2xl border-white/10 bg-white/5 text-muted-foreground hover:bg-white/10 hover:text-foreground oversized-tap"
+            variant="ghost" 
+            className="w-full h-14 rounded-2xl text-slate-500 hover:text-slate-900 hover:bg-slate-50"
           >
-            <LogOut className="w-5 h-5 mr-2" />
-            Выйти из системы
+            <LogOut className="w-5 h-5 mr-3" />
+            Выйти
           </Button>
           <Button 
-            onClick={handleClearHistory}
             variant="ghost" 
-            className="w-full h-14 rounded-2xl text-destructive hover:bg-destructive/10 oversized-tap"
+            className="w-full h-14 rounded-2xl text-destructive hover:bg-red-50"
           >
-            <Trash2 className="w-5 h-5 mr-2" />
-            Очистить историю
+            <Trash2 className="w-5 h-5 mr-3" />
+            Удалить данные
           </Button>
-        </section>
+        </div>
       </div>
-
-      <footer className="mt-12 text-center text-[10px] text-muted-foreground opacity-40">
-        EVPULSE MOBILE • v1.0.24-BY-STABLE
-      </footer>
     </main>
   );
 }

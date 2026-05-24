@@ -4,31 +4,26 @@
 
 @layer base {
   :root {
-    --background: 240 14% 7%;
-    --foreground: 0 0% 98%;
-    --card: 240 14% 10%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 14% 7%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 240 82% 65%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 240 10% 20%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 10% 20%;
-    --muted-foreground: 240 5% 70%;
-    --accent: 206 80% 55%;
-    --accent-foreground: 0 0% 100%;
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 221.2 83.2% 53.3%;
+    --accent-foreground: 210 40% 98%;
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 10% 25%;
-    --input: 240 10% 25%;
-    --ring: 240 82% 65%;
-    --chart-1: 240 82% 65%;
-    --chart-2: 206 80% 55%;
-    --chart-3: 160 60% 45%;
-    --chart-4: 30 80% 55%;
-    --chart-5: 280 65% 60%;
-    --radius: 1rem;
+    --destructive-foreground: 210 40% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
+    --radius: 0.75rem;
   }
 }
 
@@ -37,17 +32,17 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-body antialiased selection:bg-primary/30;
+    @apply bg-background text-foreground font-body antialiased;
   }
   h1, h2, h3, h4, h5, h6 {
     @apply font-headline tracking-tight;
   }
 }
 
-.glass-card {
-  @apply bg-card/60 backdrop-blur-md border border-white/10 shadow-xl;
+.minimal-card {
+  @apply bg-white border border-slate-100 shadow-sm rounded-2xl transition-all hover:shadow-md;
 }
 
 .oversized-tap {
-  @apply min-h-[48px] min-w-[48px];
+  @apply min-h-[44px] min-w-[44px];
 }
