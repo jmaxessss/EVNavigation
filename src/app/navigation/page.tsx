@@ -86,29 +86,52 @@ export default function NavigationPage() {
   };
 
   return (
-    <main className="relative h-screen w-screen overflow-hidden bg-[#0F0F14]">
-      {/* Background Map Placeholder */}
+    <main className="relative h-screen w-screen overflow-hidden bg-[#0A0A0F]">
+      {/* Map Background Layer */}
       <div className="absolute inset-0 z-0">
         {mapPlaceholder && (
           <Image 
             src={mapPlaceholder.imageUrl}
             alt={mapPlaceholder.description}
             fill
-            className="object-cover opacity-30 grayscale brightness-[0.4]"
+            className="object-cover opacity-40 contrast-125 brightness-75"
             data-ai-hint={mapPlaceholder.imageHint}
             priority
           />
         )}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0F0F14]/80 via-transparent to-[#0F0F14]"></div>
-        <div className="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:60px_60px]"></div>
         
+        {/* Map Overlays: Grid and Gradients */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0F]/60 via-transparent to-[#0A0A0F]"></div>
+        <div className="absolute inset-0 opacity-20 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+        
+        {/* Interactive Route Elements */}
         {recommendations && (
-          <div className="absolute top-1/2 left-1/4 right-1/4 h-1 bg-primary/40 rounded-full blur-[1px] animate-pulse">
-             <div className="absolute -top-1 left-0 w-3 h-3 bg-primary rounded-full shadow-[0_0_15px_rgba(94,94,237,1)]"></div>
-             <div className="absolute -top-2 left-1/2 w-5 h-5 bg-accent rounded-full border-4 border-background flex items-center justify-center">
-               <Zap className="w-3 h-3 text-white" />
-             </div>
-             <div className="absolute -top-1 right-0 w-3 h-3 bg-emerald-500 rounded-full"></div>
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <svg width="100%" height="100%" className="absolute inset-0">
+              <path 
+                d="M 150 400 Q 300 250 500 350 T 800 200" 
+                fill="none" 
+                stroke="hsl(var(--primary))" 
+                strokeWidth="4" 
+                strokeDasharray="12 8"
+                className="animate-[dash_20s_linear_infinite]"
+              />
+              <circle cx="150" cy="400" r="6" fill="white" className="animate-pulse" />
+              <circle cx="800" cy="200" r="8" fill="hsl(var(--accent))" />
+            </svg>
+            
+            {/* Pulsing Location Indicator */}
+            <div className="absolute top-[350px] left-[500px]">
+              <div className="relative">
+                <div className="absolute -inset-4 bg-primary/30 rounded-full animate-ping"></div>
+                <div className="p-2 bg-primary rounded-full shadow-[0_0_20px_rgba(94,94,237,0.6)] border-2 border-white/20">
+                  <Zap className="w-4 h-4 text-white" />
+                </div>
+                <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-card/90 backdrop-blur px-3 py-1 rounded-lg border border-white/10 whitespace-nowrap shadow-xl">
+                  <p className="text-[10px] font-bold text-white uppercase tracking-tighter">Malanka Supercharge</p>
+                </div>
+              </div>
+            </div>
           </div>
         )}
       </div>
@@ -124,7 +147,7 @@ export default function NavigationPage() {
           <div className="relative flex-1">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
             <Input 
-              placeholder="Куда едем сегодня?" 
+              placeholder="Введите пункт назначения..." 
               value={destination}
               onChange={(e) => setDestination(e.target.value)}
               className="pl-12 h-14 bg-card/80 backdrop-blur-xl border-white/5 rounded-2xl text-lg font-headline shadow-2xl focus-visible:ring-primary oversized-tap" 
@@ -164,7 +187,7 @@ export default function NavigationPage() {
                 </div>
                 <div className="text-right">
                   <p className="text-sm font-bold">EVPulse AI</p>
-                  <p className="text-xs text-muted-foreground">Готов к планированию</p>
+                  <p className="text-xs text-muted-foreground">Беларусь • Готов</p>
                 </div>
               </div>
             ) : (
@@ -180,14 +203,14 @@ export default function NavigationPage() {
                   </div>
                   <div className="text-right">
                     <p className="text-xl font-bold font-headline text-accent">12 мин</p>
-                    <p className="text-xs text-muted-foreground">Прибытие через</p>
+                    <p className="text-xs text-muted-foreground">До зарядки</p>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-3 gap-4">
                   <div className="flex flex-col items-center gap-2 p-3 rounded-2xl bg-white/5 border border-white/5">
                     <Zap className="w-5 h-5 text-primary" />
-                    <span className="text-xs font-bold">{recommendations.preferredChargerTypes?.[0] || 'CCS / 150kW'}</span>
+                    <span className="text-xs font-bold">{recommendations.preferredChargerTypes?.[0] || 'CCS / 150кВт'}</span>
                   </div>
                   <div className="flex flex-col items-center gap-2 p-3 rounded-2xl bg-white/5 border border-white/5">
                     <Coffee className="w-5 h-5 text-accent" />
@@ -195,7 +218,7 @@ export default function NavigationPage() {
                   </div>
                   <div className="flex flex-col items-center gap-2 p-3 rounded-2xl bg-white/5 border border-white/5">
                     <Clock className="w-5 h-5 text-emerald-500" />
-                    <span className="text-xs font-bold">20м стоп</span>
+                    <span className="text-xs font-bold">~20м стоп</span>
                   </div>
                 </div>
 
@@ -212,13 +235,21 @@ export default function NavigationPage() {
                   disabled={isNavigating}
                   className="w-full h-14 bg-primary rounded-2xl text-lg font-headline oversized-tap flex items-center justify-center gap-2"
                 >
-                  {isNavigating ? <Loader2 className="w-6 h-6 animate-spin" /> : "Построить маршрут"}
+                  {isNavigating ? <Loader2 className="w-6 h-6 animate-spin" /> : "Начать навигацию"}
                 </Button>
               </div>
             )}
           </CardContent>
         </Card>
       </div>
+
+      <style jsx global>{`
+        @keyframes dash {
+          to {
+            stroke-dashoffset: -1000;
+          }
+        }
+      `}</style>
     </main>
   );
 }
